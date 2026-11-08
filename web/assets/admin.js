@@ -99,7 +99,7 @@ function list(m, rows, key) {
     const td = el("td");
     const act = (t, fn) => { const b = el("button", t, "mini"); b.addEventListener("click", fn); td.append(b); };
     if (!m.rpc && r.status !== "verified") act("সম্পাদনা", () => editRow(m, r));
-    if (m.verify && r.status !== "verified") act("যাচাই করুন", () => patch(m, r, { status: "verified", verified_by: "admin" }, key));
+    if (m.verify && r.status !== "verified") act("যাচাই করুন", () => patch(m, r, m.table === "donations" ? { status: "verified", verified_by: "admin" } : { status: "verified" }, key));
     if (m.extra) m.extra(r, act, () => openTab(key));
     if (m.receipt) act("রসিদ", () => window.open("receipt.html?id=" + r.id, "_blank"));
     act("মুছুন", () => confirm("এই তথ্য আর্কাইভে যাবে (স্থায়ীভাবে মুছবে না)। নিশ্চিত?") && patch(m, r, { deleted_at: new Date().toISOString() }, key));
